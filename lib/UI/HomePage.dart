@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/main.dart';
+import 'package:todoapp/widget/AddTodoDialogWidget.dart';
+import 'package:todoapp/widget/TodoListWidget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,7 +13,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [Container(), Container()];
+    final tabs = [TodoListWidget(), Container()];
     return Scaffold(
       appBar: AppBar(
         title: Text(MyApp.title),
@@ -41,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () => showDialog(
             context: context,
-            child: AddTodoDialogWidget(),
+            builder: (context) => AddTodoDialogWidget(),
             barrierDismissible: false),
         child: Icon(
           Icons.add,

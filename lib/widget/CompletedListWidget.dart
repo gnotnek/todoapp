@@ -4,18 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/provider/todos.dart';
 import 'package:todoapp/widget/TodoWidget.dart';
 
-class TodoListWidget extends StatelessWidget {
+class CompletedListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<TodosProvider>(context);
-    final todos = provider.todos;
+    final todos = provider.todosCompleted;
 
     return todos.isEmpty
         ? Center(
             child: Text(
-            'No To do',
-            style: TextStyle(fontSize: 20),
-          ))
+              'No completed task',
+              style: TextStyle(fontSize: 20),
+            ),
+          )
         : ListView.separated(
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(16),

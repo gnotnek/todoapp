@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:provider/provider.dart';
+import 'package:todoapp/model/todo.dart';
+import 'package:todoapp/provider/todos.dart';
 import 'todoFormWidget.dart';
 
 class AddTodoDialogWidget extends StatefulWidget {
@@ -13,7 +17,9 @@ class _AddTodoDialogWidgetState extends State<AddTodoDialogWidget> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        content: Column(
+          content: Form(
+        key: _formKey,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,8 +32,25 @@ class _AddTodoDialogWidgetState extends State<AddTodoDialogWidget> {
                 onChangedTitle: (title) => setState(() => this.title = title),
                 onChangedDesc: (description) =>
                     setState(() => this.desc = description),
-                onSavedTodo: () {})
+                onSavedTodo: addTodo)
           ],
         ),
-      );
+      ));
+
+  void addTodo() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    } else {
+      final todo = Todo(
+          id: DateTime.now().toString(),
+          title: title,
+          description: desc,
+          createdTime: DateTime.now());
+
+      final provider = Provider.of<TodosProvider>(context, listen: false);
+      provider.addTodo(todo);
+      Navigator.of(context).pop();
+    }
+  }
 }

@@ -8,7 +8,7 @@ class TodoFormWidget extends StatelessWidget {
   final VoidCallback onSavedTodo;
 
   const TodoFormWidget({
-    Key key,
+    Key? key,
     this.title = '',
     this.desc = '',
     required this.onChangedTitle,

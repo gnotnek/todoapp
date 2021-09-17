@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: non_constant_identifier_names
   int selected_index = 0;
 
   @override

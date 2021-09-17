@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class TodoField {
   static const createdTime = 'createdTime';
@@ -15,7 +14,7 @@ class Todo {
     required this.createdTime,
     required this.title,
     this.description = '',
-    this.id,
+    required this.id,
     this.isDone = false,
   });
 }

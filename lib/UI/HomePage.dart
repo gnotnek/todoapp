@@ -1,5 +1,11 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/main.dart';
+import 'package:todoapp/model/todo.dart';
+import 'package:todoapp/provider/todos.dart';
+import 'package:todoapp/services/firebase_api.dart';
 import 'package:todoapp/widget/AddTodoDialogWidget.dart';
 import 'package:todoapp/widget/CompletedListWidget.dart';
 import 'package:todoapp/widget/TodoListWidget.dart';
@@ -39,7 +45,25 @@ class _HomePageState extends State<HomePage> {
               label: 'Completed')
         ],
       ),
-      body: tabs[selected_index],
+      body: StreamBuilder<List<Todo>>(
+          stream: FirebaseApi.readTodos(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  return buildText('Something Went Wrong Try later');
+                } else {
+                  final todos = snapshot.data;
+
+                  final provider = Provider.of<TodosProvider>(context);
+                  provider.setTodos(todos!);
+
+                  return tabs[selected_index];
+                }
+            }
+          }),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Theme.of(context).primaryColor,
@@ -54,4 +78,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Widget buildText(String text) => Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 24, color: Colors.white),
+        ),
+      );
 }

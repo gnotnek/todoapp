@@ -1,32 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:todoapp/model/todo.dart';
+import 'package:todoapp/services/firebase_api.dart';
 
 class TodosProvider extends ChangeNotifier {
-  List<Todo> _todos = [
-    Todo(createdTime: DateTime.now(), title: 'example', id: DateTime.now().toString()),
-    Todo(createdTime: DateTime.now(), title: 'expample 2', description: '''
-  -makan
-  -minum''', id: DateTime.now().toString())
-  ];
+  List<Todo> _todos = [];
 
   List<Todo> get todos => _todos.where((todo) => todo.isDone == false).toList();
 
   List<Todo> get todosCompleted =>
       _todos.where((todo) => todo.isDone == true).toList();
 
-  void addTodo(Todo todo) {
-    _todos.add(todo);
-    notifyListeners();
-  }
+  void setTodos(List<Todo> todo) =>
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        _todos = todos;
+        notifyListeners();
+      });
 
-  void removeTodo(Todo todo) {
-    _todos.remove(todo);
-    notifyListeners();
-  }
+  void addTodo(Todo todo) => FirebaseApi.createTodo(todo);
+
+  void removeTodo(Todo todo) => FirebaseApi.deleteTodo(todo);
 
   bool toggleTodoStatus(Todo todo) {
     todo.isDone = !todo.isDone;
-    notifyListeners();
+    FirebaseApi.updateTodo(todo);
 
     return todo.isDone;
   }
@@ -35,6 +31,6 @@ class TodosProvider extends ChangeNotifier {
     todo.title = title;
     todo.description = desc;
 
-    notifyListeners();
+    FirebaseApi.updateTodo(todo);
   }
 }

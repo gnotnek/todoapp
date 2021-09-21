@@ -49,7 +49,7 @@ class TodoWidget extends StatelessWidget {
             children: [
               Checkbox(
                 activeColor: Theme.of(context).primaryColor,
-                checkColor: Colors.white,
+                checkColor: Colors.blueGrey,
                 value: todo.isDone,
                 onChanged: (_) {
                   final provider =

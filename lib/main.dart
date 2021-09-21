@@ -1,3 +1,4 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: title,
         theme: ThemeData(
-            primaryColor: Colors.blue, scaffoldBackgroundColor: Colors.white54),
+            primaryColor: Colors.blue, scaffoldBackgroundColor: Colors.white),
         home: HomePage(),
       ));
 }

@@ -1,7 +1,7 @@
-// ignore: import_of_legacy_library_into_null_safe
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:async';
 
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

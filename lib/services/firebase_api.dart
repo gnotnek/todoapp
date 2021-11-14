@@ -20,7 +20,8 @@ class FirebaseApi {
       .collection('todo')
       .orderBy(TodoField.createdTime, descending: true)
       .snapshots()
-      .transform(Utils.transformer(Todo.fromJson) as StreamTransformer<QuerySnapshot, List<Todo>>);
+      .transform(Utils.transformer(Todo.fromJson)
+          as StreamTransformer<QuerySnapshot, List<Todo>>);
 
   static Future updateTodo(Todo todo) async {
     final docTodo = FirebaseFirestore.instance.collection('todo').doc(todo.id);
